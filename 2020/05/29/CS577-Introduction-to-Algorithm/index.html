@@ -227,18 +227,14 @@
 <li>Linear Time $O(n)$</li>
 </ol>
 <ul>
-<li><p>其实最简单的例子是for循环一遍， 多一个循环复杂度就 * n</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MergeArray(a[n], b[n]):</span><br><span class="line">i = 1, j = 1;</span><br><span class="line">while both are nonempty</span><br><span class="line">    if(a[i]&lt;=b[j])</span><br><span class="line">        append a[i] to output list and increment i;</span><br><span class="line">    else </span><br><span class="line">        append b[j] to output list and increment j;</span><br><span class="line">append remainder of nonempty list to output list </span><br></pre></td></tr></table></figure>
-</li>
+<li> 其实最简单的例子是for循环一遍， 多一个循环复杂度就 * n</li>
 </ul>
-</li>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MergeArray(a[n], b[n]):</span><br><span class="line">i = 1, j = 1;</span><br><span class="line">while both are nonempty</span><br><span class="line">    if(a[i]&lt;=b[j])</span><br><span class="line">        append a[i] to output list and increment i;</span><br><span class="line">    else </span><br><span class="line">        append b[j] to output list and increment j;</span><br><span class="line">append remainder of nonempty list to output list </span><br></pre></td></tr></table></figure></li>
 <li><ol start="2">
 <li>Quadratic $O(n^{2})$</li>
 </ol>
 <ul>
-<li>当循环为N个for循环时，就可以得到 n*n 的复杂度<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Min = (x[1]-x[2])^2 + (y[1]-y[2])</span><br><span class="line">    for i form 1 to n</span><br><span class="line">        for j from i+1 to n</span><br><span class="line">            d = (x[i]-x[j])^2 + (y[i]-y[j])^2;</span><br><span class="line">            if d &lt; min</span><br><span class="line">                min &lt;- d;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>当循环为N个for循环时，就可以得到 n*n 的复杂度<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Min = (x[1]-x[2])^2 + (y[1]-y[2])</span><br><span class="line">    for i form 1 to n</span><br><span class="line">        for j from i+1 to n</span><br><span class="line">            d = (x[i]-x[j])^2 + (y[i]-y[j])^2;</span><br><span class="line">            if d &lt; min</span><br><span class="line">                min &lt;- d;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>

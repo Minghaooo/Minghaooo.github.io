@@ -211,16 +211,16 @@
 <h3 id="Collections"><a href="#Collections" class="headerlink" title="Collections"></a>Collections</h3><p>Collections 是时序约束的常用单位,一个 collection 是多个端口的集合。</p>
 <ul>
 <li><p>default collections</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">all_clocks //return a collection of all clocks in the design.</span><br><span class="line">all_inputs //return a collection of all input ports in the design.</span><br><span class="line">all_outputs //return a collection of all output ports in the design.</span><br><span class="line">all_registers //return a collection of all registers in the design.</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">all_clocks //return a collection of all clocks in the design.</span><br><span class="line">all_inputs //return a collection of all input ports in the design.</span><br><span class="line">all_outputs //return a collection of all output ports in the design.</span><br><span class="line">all_registers //return a collection of all registers in the design.</span><br></pre></td></tr></table></figure></li>
 <li><p>get_commands</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">get_ports [-nocase] [-nowarn] &lt;filter&gt;</span><br><span class="line">get_pins &lt;filter&gt;</span><br><span class="line">get_net &lt;filter&gt;</span><br><span class="line">get_clock &lt;filter&gt;</span><br><span class="line">get_cells &lt;filter&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>[-nocase] case sensitive</li>
-<li>[-nowarn] not issue warning strategies</li>
-<li>[xxxxxxx] you can find more models in Intel’s document</li>
-<li>&lt;filter&gt; the string are matched using TCL string matching</li>
-</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">get_ports [-nocase] [-nowarn] &lt;filter&gt;</span><br><span class="line">get_pins &lt;filter&gt;</span><br><span class="line">get_net &lt;filter&gt;</span><br><span class="line">get_clock &lt;filter&gt;</span><br><span class="line">get_cells &lt;filter&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>[-nocase] case sensitive</p>
+</li>
+<li><p>[-nowarn] not issue warning strategies</p>
+</li>
+<li><p>[xxxxxxx] you can find more models in Intel’s document</p>
+</li>
+<li><p>&lt;filter&gt; the string are matched using TCL string matching</p>
 </li>
 </ul>
 <h3 id="Timing-constrains"><a href="#Timing-constrains" class="headerlink" title="Timing constrains"></a>Timing constrains</h3><ul>
@@ -238,12 +238,8 @@
 <ul>
 <li>-source [get_port xxx ] 同上 clk1，是电路连接的时钟端口</li>
 <li>-name “clk_init” 是时钟源信号的名称</li>
-<li>-divide_by ｜-multiply_by <factor> 其中 x 是分频系数，</li>
-<li><source objects> specify the ports or pins the assignment applies
-
-
-
-</li>
+<li> -divide_by ｜-multiply_by <factor> 其中 x 是分频系数，</li>
+<li> <source objects> specify the ports or pins the assignment applies</li>
 </ul>
 </li>
 </ul>
