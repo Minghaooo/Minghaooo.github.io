@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myblog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myblog/css/main.css">
+
+
+<link rel="stylesheet" href="/myblog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/myblog/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myblog/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"minghaooo.github.io","root":"/myblog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="动态规划是入门第二周的主题。突然就发现老师挂羊头卖狗肉，教科书其实是按照 Algorithm Design 讲的，然后就舒服了，，，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS577-02-Dynamic-Programming">
+<meta property="og:url" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="动态规划是入门第二周的主题。突然就发现老师挂羊头卖狗肉，教科书其实是按照 Algorithm Design 讲的，然后就舒服了，，，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/001.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/002.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/003.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/004.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/005.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/006.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/007.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/009.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/008.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/010.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/011.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/012.png">
+<meta property="article:published_time" content="2020-06-20T16:10:59.000Z">
+<meta property="article:modified_time" content="2020-08-20T22:32:03.000Z">
+<meta property="article:author" content="MinghaoOoO">
+<meta property="article:tag" content="CS577">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/001.png">
+
+<link rel="canonical" href="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CS577-02-Dynamic-Programming | </title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myblog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title"></h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myblog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myblog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myblog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/myblog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://minghaooo.github.io/myblog/2020/06/20/CS577-02-Dynamic-Programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myblog/images/aaa.jpeg">
+      <meta itemprop="name" content="MinghaoOoO">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS577-02-Dynamic-Programming
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-20 09:10:59" itemprop="dateCreated datePublished" datetime="2020-06-20T09:10:59-07:00">2020-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 15:32:03" itemprop="dateModified" datetime="2020-08-20T15:32:03-07:00">2020-08-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>动态规划是入门第二周的主题。突然就发现老师挂羊头卖狗肉，教科书其实是按照 Algorithm Design 讲的，然后就舒服了，，，</p>
+<span id="more"></span>
+
+<h3 id="动态规划的主要方法"><a href="#动态规划的主要方法" class="headerlink" title="动态规划的主要方法"></a>动态规划的主要方法</h3><h4 id="分段最小二乘"><a href="#分段最小二乘" class="headerlink" title="分段最小二乘"></a>分段最小二乘</h4><p>最小二乘一般用于线性函数拟合问题，本身并无难点。在本题中难点在于确定多少根线条可以获得比较好的拟合结果.</p>
+<p><img src="001.png" alt=""></p>
+<p>根据肉眼观察，肯定是3段线条能够比较好的拟合上图的散点。但是问题在于，换个图程序就不知道了，难道需要每次都手动告诉程序要分多少段吗？肯定没人愿意。</p>
+<p>于是我们对于本题的需求在于，想要找到合适的点，分合适的段，得到合适的结果。于是在本题中较好的方法是：加入另一个变量，对于每一个segment引入惩罚。</p>
+<p>$$\operatorname{OPT}(n)=e_{i, n}+C+\operatorname{OPT}(i-1)$$</p>
+<p>对于点 1..n, e表示每条线段拟合过后出现的error，而在本算法中新引入的是C，因此每多一个segment 就多一个惩罚，以此得到最合适的分段值。 OPT（i）表示从1到i分段的penalty的最优解。 本式子的意义在于： 对每一段函数，都会引入一个C， 加上这一段之前的 0 - i-1 这么一段的最优解。 以此公式进行递归就可以求解。</p>
+<p>$$OPT (j)=\min_{1 \leq i \leq j} \left(e_{i, j}+C+ OPT (i-1)\right)$$</p>
+<p>于是该问题的algorithm 如下图所示：<br><img src="002.png" alt=""></p>
+<p>对于该算法的理解：　首先初始化该算法，并且设置M[0]=0（递归的终止点）。算法首先接受到的是n，此为所有点的坐标。<br>其次， 依次对所有partition p1，p2,,,,pn 计算所有的拟合误差 error 值，(计算了一次后面就不用了)<br>然后根据分的段数，依次计算OPT(j)，得到最小值。我的理解是这样的：<br>j=1 时， 因为 i-1 只能为0， 所以其结果就是 只有一个点的OPT值。（其实没啥意义）<br>j=2 时， i 可以等于1 或者2. 当i = 1 时， 就是在第一个点上分段，i=2， 就是在第二个点上分。当i=2 是，p1 这个点就被送到了OPT(i-1)这个式子中去。<br>j=3时， i=1,2,3. i=1时 就是分一段。当i=2 时，讲i=1 丢给OPT(i-1)， i = 3时将1,2 丢给OPT(i-1).</p>
+<p>由此当 j = n 时，假设point 1.2.3….i…j…n<br>将n 送入式子中，会依次递归，比如在j出分段，将i 到 j-1 丢入OPT(i-1)中。 然后到i处分段时，可以依次类推。然而要注意的是，OPT(i-1)的值都已经存入了M[j]中，所以在搜索I 的时候，不需要每次都从头开始计算，其操作复杂度应该是O(1)的，这是动态规划的关键。<br>当然直接这样理解可能还是有问题，在这挖个坑，，以后再回来补充代码。</p>
+<p>得到了最优解，但是其实我们还需要traceback 才能知道应该在哪分段，(好烦啊)<br><img src="003.png" alt=""></p>
+<p>根据以上算法，其实可能并不复杂。就是在之前提到过的式子：</p>
+<p>$$OPT (j)=\min_{1 \leq i \leq j} \left(e_{i, j}+C+ OPT (i-1)\right)$$<br>中，将i打印出来。没啥毛病。 </p>
+<h4 id="背包问题-（双变量）"><a href="#背包问题-（双变量）" class="headerlink" title="背包问题 （双变量）"></a>背包问题 （双变量）</h4><p>背包问题与之前的不同在于其添加了一个变量。在之前的最小二乘中，每个点和每个点是想同的，而问题的目标仅仅在于使总penalty最小，其唯一输入是点坐标，而所求的结果是根据坐标点。 而背包问题中，有两个变量， 第一是输入是物品1…i，第二是背包容量w。在之前问题中，选择分多少段对于问题整体而言没有任何除了penalty之外的影响，因此只需要考虑分解成的小问题， 对于i 个物品该怎么分。<br>所以对本问题， 对于第i个物品，如果将其放入背包，则需要将背包中负重容量也相应减去$w_{i}$</p>
+<p>$$\operatorname{opt}(i, w)=\max \left(\operatorname{opt}(i-1, w), w_{i}+\operatorname{opt}\left(i-1, w-w_{i}\right)\right)$$</p>
+<p>接下来的图是一个example， 这个图一共有3个物品， 总容量为6<br><img src="004.png" alt=""><br>对于同样的递推公式，需要一个二维数组来进行记录。 首先考虑什么都不装的情况，那自然都是0， 然后是考虑w1这个物品，由于其重量为2，因此当背包负荷大于2时，就可以将该物品装入。<br>同理，依次考虑有i件物品， 并且背包容量从 0 到 w 时的情况，依次填入表格。最后的一个格子就是所需要的。<br>算法复杂度是O(n*w), n 是物品个数，而w 是背包容量。</p>
+<h4 id="Edited-Distance"><a href="#Edited-Distance" class="headerlink" title="Edited Distance"></a>Edited Distance</h4><p>这题在老师ppt上。 说实话感觉老师精简了难度。<br>这是用最少的操作数将一个字符串转化成另一个字符串。 而可用的字符串有以下三种：</p>
+<ul>
+<li>delete $S_{i}$</li>
+<li>Insert $t_{j}$</li>
+<li>substitution </li>
+</ul>
+<p>因此其状态转换方程式如下</p>
+<p><img src="005.png" alt=""></p>
+<p>以一下案例来理解：<br>SUNDAY 和 Saturday 到底需要几个呢？<br>思路还是跟之前一样，从base case 单个字母开始。 （初始化就跳过了）<br>对于接下来的每一个字母增加， 都依次根据D{i-1, j}, D{i,j-1}, D{i-1,j-1} 三种情况来计算其最短编辑距离。<br><img src="006.png" alt=""><br>如图， 因为其最后一个3 根据第一第二公式来算的话，它应该是4 和5， 而根据第三个公式应该是3， 因为 A 和 A 是相同的。 </p>
+<h4 id="Sequence-Alignment"><a href="#Sequence-Alignment" class="headerlink" title="Sequence Alignment"></a>Sequence Alignment</h4><p>序列对比 是 Generalized form of Edited distance.</p>
+<p>对于两个序列 X = {x1,x2, x3,x4….xn}和 Y = {y1,y2,y3,,,,yn},其目标是：</p>
+<ul>
+<li>Maximizes the similarity by giving weights to two types of difference<ul>
+<li>Gap: insert or deletes</li>
+<li>Mismatch - subsitute</li>
+</ul>
+</li>
+<li>Def. An alignment M is a set of ordered pairs $x_{i}-y_{j}$ such that each item occurs in at most one pair and no crossings.</li>
+</ul>
+<p>关于Crossing 的解释：<br>如果两个字符串没有“crossing”:$\text { if }(i, j),\left(i^{\prime}, j^{\prime}\right) \in M \text { and } i&lt;i^{\prime}, \text { then } j&lt;j^{\prime}$</p>
+<p>for example： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stop-</span><br><span class="line">-tops</span><br></pre></td></tr></table></figure>
+<p>那么 alignment M 就是 {(2,1),(3,2),(4,3)}， 其中i &lt; i’, j &lt; j’.<br>最终优化的函数是:<br><img src="007.png" width="60%" height="50%"></p>
+<p>直接上图<br><img src="009.png" alt=""></p>
+<p>可以看到，虽然有很多种pair ，但是我们需要cost 最小的那种.于是OPT递推方程是:<br><img src="008.png" width="60%" ></p>
+<p>这个公式min()项跟之前的有点类似，都是根据之前的结果算出当前M[i,j]</p>
+<img src="010.png" width="70%" >
+上图比较形象的解释了 edited distance 和 本题中的算法：从左到下方三个点中到达计算点的最小距离。
+
+<h4 id="Sequence-Alignment-via-Divide-and-Conquer"><a href="#Sequence-Alignment-via-Divide-and-Conquer" class="headerlink" title="Sequence Alignment via Divide and Conquer"></a>Sequence Alignment via Divide and Conquer</h4><p>人呐总是不知足，吃着碗里的望着锅里的。 给了个算法还不够，嫌弃人家占用资源，，，接下来应该是几种优化情况了。</p>
+<ul>
+<li>, the recurrence only needs information from the current column of A and the previous column of A. Thus we will “collapse” the array A to an m × 2 array </li>
+</ul>
+<p>大意就是，只需要存两个column 的值，就可以得到最后的结果：<br><img src="011.png" width="30%"><br>其原理应该也还是比较容易看明白的。实际上存的是当前值和前一个column的值，所以占用空间被简化了。当然，这样的话我们就找不到配对的具体情况了。  </p>
+<p>但是，要是真不能知道结果，这个方法也就没必要存在了。</p>
+<h5 id="A-Backward-Formulation-of-the-Dynamic-Program"><a href="#A-Backward-Formulation-of-the-Dynamic-Program" class="headerlink" title="A Backward Formulation of the Dynamic Program"></a>A Backward Formulation of the Dynamic Program</h5><p>这个名字有点意思，让我一下就想起了卷积神经网络的方向传输，，，，<br>Ok， 其实是把整个反过来，然后取中间一点，i,j 前半部分叫p(i,j), 后半部分叫f(i,j). </p>
+<p>devide and conquer 在这是从两边开始分别用的。<br>从（0，0）和{m,n}两个点分别开始靠拢，然后就得到中间那一条的路径长短，然后加起来比较下就好了。</p>
+<p>Divide: find index q that minimize f(q,n/2)+g(1,n/2) use dp</p>
+<ul>
+<li>align $X_q$ and $Y_(n/2)$<br>Conquer: recursively compute optimal alignment in each piece.</li>
+</ul>
+<img src="012.png" width="90%">
+ 这个算法ppt 上好像没有了，我先挖个坑，等等再来。（要考试了来不及啊！！！！
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/myblog/tags/CS577/" rel="tag"># CS577</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myblog/2020/06/03/%E9%AB%98%E7%BA%A7ASIC%E7%BB%BC%E5%90%88-%E4%B8%80/" rel="prev" title="高级ASIC综合 一">
+      <i class="fa fa-chevron-left"></i> 高级ASIC综合 一
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myblog/2020/06/21/CS577-03-Graphs/" rel="next" title="CS577-03-Graphs">
+      CS577-03-Graphs <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDMwOS8yNjc5OQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">动态规划的主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%AE%B5%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98"><span class="nav-number">1.1.</span> <span class="nav-text">分段最小二乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98-%EF%BC%88%E5%8F%8C%E5%8F%98%E9%87%8F%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">背包问题 （双变量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Edited-Distance"><span class="nav-number">1.3.</span> <span class="nav-text">Edited Distance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sequence-Alignment"><span class="nav-number">1.4.</span> <span class="nav-text">Sequence Alignment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sequence-Alignment-via-Divide-and-Conquer"><span class="nav-number">1.5.</span> <span class="nav-text">Sequence Alignment via Divide and Conquer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#A-Backward-Formulation-of-the-Dynamic-Program"><span class="nav-number">1.5.1.</span> <span class="nav-text">A Backward Formulation of the Dynamic Program</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MinghaoOoO"
+      src="/myblog/images/aaa.jpeg">
+  <p class="site-author-name" itemprop="name">MinghaoOoO</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myblog/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myblog/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Minghaooo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Minghaooo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tmhwisc@gmail.com" title="E-Mail → mailto:tmhwisc@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghaooo</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myblog/lib/anime.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myblog/js/utils.js"></script>
+
+<script src="/myblog/js/motion.js"></script>
+
+
+<script src="/myblog/js/schemes/muse.js"></script>
+
+
+<script src="/myblog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/myblog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/myblog/live2dw/assets/assets/koharu.model.json"},"display":{"position":"left"},"mobile":{"show":true,"position":"right"},"react":{"opacity":0.95}});</script></body>
+</html>

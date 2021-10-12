@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myblog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myblog/css/main.css">
+
+
+<link rel="stylesheet" href="/myblog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/myblog/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myblog/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"minghaooo.github.io","root":"/myblog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="CDC 就是跨时域的信号处理，非常重要。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VLSI CDC Clock Domain Crossing">
+<meta property="og:url" content="https://minghaooo.github.io/myblog/2020/07/18/VLSI-CDC-ClockDomainCrossing/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="CDC 就是跨时域的信号处理，非常重要。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-19T02:51:19.000Z">
+<meta property="article:modified_time" content="2020-08-20T22:32:03.000Z">
+<meta property="article:author" content="MinghaoOoO">
+<meta property="article:tag" content="VLSI">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://minghaooo.github.io/myblog/2020/07/18/VLSI-CDC-ClockDomainCrossing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>VLSI CDC Clock Domain Crossing | </title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myblog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title"></h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myblog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myblog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myblog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/myblog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://minghaooo.github.io/myblog/2020/07/18/VLSI-CDC-ClockDomainCrossing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myblog/images/aaa.jpeg">
+      <meta itemprop="name" content="MinghaoOoO">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VLSI CDC Clock Domain Crossing
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-18 19:51:19" itemprop="dateCreated datePublished" datetime="2020-07-18T19:51:19-07:00">2020-07-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 15:32:03" itemprop="dateModified" datetime="2020-08-20T15:32:03-07:00">2020-08-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>CDC 就是跨时域的信号处理，非常重要。</p>
+<span id="more"></span>
+
+<h3 id="亚稳态-Metastability"><a href="#亚稳态-Metastability" class="headerlink" title="亚稳态 Metastability"></a>亚稳态 Metastability</h3><p>数字信号一般在 0 和 1 之间，但是有时候总会抽风所以处于不知道是什么的状态，导致输出结果无法预测。<br>亚稳态无法彻底避免，但是它带来的不好的影响可以被消除（ can not be avoided, but the detrimental effects can be neutralized.) </p>
+<p>亚稳态的出现归根到底是因为建立时间和保持时间不能满足要求。</p>
+<ul>
+<li>建立时间 （setup time）： 时钟沿到来之前数据需要保持稳定的时间。</li>
+<li>保持时间 （hold time）： 时钟沿到达之后数据需要保持的时间。</li>
+</ul>
+<h3 id="同步化问题-Synchronizers"><a href="#同步化问题-Synchronizers" class="headerlink" title="同步化问题 Synchronizers"></a>同步化问题 Synchronizers</h3><p>这个 synchronizer 是将从别的时钟域过来的信号转换为同步信号的一个东西。<br>Do I need to sample every value of a signal passed from one domain to another ? (这是啥问题…?)</p>
+<p>(1) it is permitted to miss samples that are passed between clock domains.</p>
+<ul>
+<li>在异步fifo 中 synchronized grey code counter do not need to capture every legal value from the opposite clock domain. </li>
+<li>但是 empty 和 full 信号必须被准确识别。</li>
+</ul>
+<p>(2)Every sample must be sampled.</p>
+<ul>
+<li><p>一个CDC 信号必须被 recognized or recognized, and acknowledged,在这个信号改变被允许之前。<br>####　two flip-flop synchronizer<br>第一个触发器将异步信号采样，并且等待一个节拍采样并送入同步时钟区， 并且等待一个时钟周期，这个信号叫 stage 1 信号。 然后 stage 1 被相同的时钟信号的触发器采样进入stage 2 ，这个stage 2 信号是稳定并且有效的同步信号。实际上stage 2 信号不稳定也是有可能的，但是从概率论上来讲已经是足够使用了。<br>这个概率是 MTBF mean time before failure 是指， 经过两级ff 以后任然不稳定的概率。 MTBF 越长越好。这个公式是：<br>$$<br> MTBF = \frac{1}{f_{clk} * f_{data} * X}<br>$$</p>
+<p>频率越高，数据变化速度越大，失败率越高。</p>
+</li>
+</ul>
+<h4 id="Three-flip-flop-synchronizer"><a href="#Three-flip-flop-synchronizer" class="headerlink" title="Three flip-flop synchronizer"></a>Three flip-flop synchronizer</h4><p>在某些高速计算中这个概率有点大，所以有时候会用到三级触发器。</p>
+<h4 id="Synchronizing-signals-from-the-sending-clock-domain"><a href="#Synchronizing-signals-from-the-sending-clock-domain" class="headerlink" title="Synchronizing signals from the sending clock domain"></a>Synchronizing signals from the sending clock domain</h4><p>不仅仅是在接收域的时钟需要flipflop 需要稳定，实际上发送域也需要。从组合逻辑出来的信号，一都会不是很稳定（combinational settling）, 然后会造成更多的亚稳态（相当于发送数据的变化频率变高了）</p>
+<h3 id="Synchronizing-fast-signals-into-slow-clock-domains"><a href="#Synchronizing-fast-signals-into-slow-clock-domains" class="headerlink" title="Synchronizing fast signals into slow clock domains"></a>Synchronizing fast signals into slow clock domains</h3><p>可能在接受器在采样前改变了两次，发送了两个信号。 或者就是离采样信号的时钟边沿太小了。有两个方向可以解决这个问题：</p>
+<ul>
+<li>开环设计，但是保证信号是被采样到的。</li>
+<li>闭环设计，发送一个接收到到的请求信号。</li>
+</ul>
+<h4 id="Requirement-for-reliable-signal-passing-between-clock-domains"><a href="#Requirement-for-reliable-signal-passing-between-clock-domains" class="headerlink" title="Requirement for reliable signal passing between clock domains"></a>Requirement for reliable signal passing between clock domains</h4><p>从slow 到fast 的时候，如果fast 的clk 在slow 的1.5x 以上，那么这种情况下CDC 就被认为问题不大， 因为会被采样一到两次以上（我也觉得没啥问题）。所以一般情况下用2级ff 就可以搞定了。</p>
+<p>CDC 信号应该要比接受域信号宽1到1.5倍。（must be stable for three destination clock edges</p>
+<h3 id="passing-a-fast-CDC-pulse"><a href="#passing-a-fast-CDC-pulse" class="headerlink" title="passing a fast CDC pulse (!)"></a>passing a fast CDC pulse (!)</h3><p>如果CDC信号在接受域的波长 只有一个周期， 那么可能无法被采样到。但是当CDC 信号比较长，但是又不够长的时候（比如刚好两个CLK， 那么有可能这个pulse 刚好在两个rising clk edge 的边边上，那么可能再第一个edge 造成setup time 不够，第二个clk hold time 不够， 然后就无法成功建立波形。</p>
+<h4 id="Open-loop"><a href="#Open-loop" class="headerlink" title="Open loop"></a>Open loop</h4><p>Advantage：</p>
+<ul>
+<li>the fastest way to pass signals </li>
+</ul>
+<p>Disadvantage:</p>
+<ul>
+<li>three edges design requirement 是凑上去的，如果涉及有改动的话也不一定能注意到。 因此可以加个assert 来保证。（这是缺点吗。，感觉可能是）</li>
+</ul>
+<h4 id="closed-loop"><a href="#closed-loop" class="headerlink" title="closed loop"></a>closed loop</h4><p>接收到以后发送一个确认信号。</p>
+<ul>
+<li>AD： very safe.</li>
+<li>Dis: have delay.</li>
+</ul>
+<h3 id="passing-multiple-signals-between-clock-signals"><a href="#passing-multiple-signals-between-clock-signals" class="headerlink" title="passing multiple signals between clock signals."></a>passing multiple signals between clock signals.</h3><p>在多个信号传输的时候 两拍ff 就没啥用了。原因是多个bit 跨时域传输时候，每个ff 会有clk skew, 然后就会有采样时间不一样的抖动问题。（发送信号也可能有clk 抖动。）</p>
+<p>可以用以下一个方案解决：</p>
+<h4 id="consolidate-多个CDC-信号变成一个信号。"><a href="#consolidate-多个CDC-信号变成一个信号。" class="headerlink" title="consolidate 多个CDC 信号变成一个信号。"></a>consolidate 多个CDC 信号变成一个信号。</h4><p>感觉是删除的意思，</p>
+<h5 id="example-1-（两个相同的信号）："><a href="#example-1-（两个相同的信号）：" class="headerlink" title="example 1 （两个相同的信号）："></a>example 1 （两个相同的信号）：</h5><p>有一个load 信号，还有一个 enable 信号。如果要求同时进入的话，可能会因为clk skew造成一个信号无法读入，但是因为有3 clk 的保证，所以还是能采样到的，但是可能相差一个节拍。然后就造成了错位。但是实际上并不需要两个信号来完成这个操作。</p>
+<h5 id="example-2-（两个相差1clk-的信号）："><a href="#example-2-（两个相差1clk-的信号）：" class="headerlink" title="example 2 （两个相差1clk 的信号）："></a>example 2 （两个相差1clk 的信号）：</h5><p>如果用两个信号控制pipeline的两级寄存器，那么 aen1 和aen2 有可能以为clk skew 而无法被准时准确识别到，而造成该信号延后一个clk（和 example 中一样）然后造成pipeline 的错误。正确的方法是应该只传输一个信号，而在接受域里用寄存器生成第二级流水线的控制信号（delay 一个周期）。</p>
+<h5 id="example-3-编码的两个信号"><a href="#example-3-编码的两个信号" class="headerlink" title="example 3 (编码的两个信号)"></a>example 3 (编码的两个信号)</h5><p>如果信号是被编码的，那么由于clk skew造成的错误可能导致解码错误。这时候应该用 Multi-cycle Path (MCP) 和 fifo 来解决问题。</p>
+<ul>
+<li>closed loop -MCP with feedback</li>
+<li>closed loop -MCP with acknowledged feedback</li>
+</ul>
+<p>或者</p>
+<ul>
+<li>Asynchronous fifo implementation </li>
+<li>2-deep fifo implementation</li>
+</ul>
+<h4 id="MCP-formulation"><a href="#MCP-formulation" class="headerlink" title="MCP formulation"></a>MCP formulation</h4><p>实际上SPI 用的就是这个原理。 在发送数据时候发送一个跟数据匹配好的时钟信号。先发送数据以后，过几个时钟周期，这个时钟信号才发送（实际上是个采样使能信号，当信号为高电平时，接受域采样。这是setup 和 hold time 都是满足时序要求的。</p>
+<h5 id="MCP-formulation-using-a-synchronized-enable-pulse"><a href="#MCP-formulation-using-a-synchronized-enable-pulse" class="headerlink" title="MCP formulation using a synchronized enable pulse"></a>MCP formulation using a synchronized enable pulse</h5><p>这是最常见的方法。还是添加一个enable 信号。</p>
+<h5 id="MCP-closed-loop-with-feedback"><a href="#MCP-closed-loop-with-feedback" class="headerlink" title="MCP closed loop with feedback"></a>MCP closed loop with feedback</h5><p>pass the enable signal back to the sending clock domain.<br>这个信号被发送域接收到以后，发送域就可以改变发送的数据。 </p>
+<h3 id="Counters-fifo"><a href="#Counters-fifo" class="headerlink" title="Counters (fifo)"></a>Counters (fifo)</h3><h4 id="grey-code"><a href="#grey-code" class="headerlink" title="grey code"></a>grey code</h4><p>在fifo 中， grey code 是经常被使用的， 但是grey code 不需要被采样，而只是 full 和 empty 的信号比较重要。是否有一种编码方式可以被用来跨过CDC信号呢？没有。<br>grey code 每次仅翻转一次，</p>
+<h4 id="binary-counter"><a href="#binary-counter" class="headerlink" title="binary counter"></a>binary counter</h4><p>把 binary counter 进行跨时钟域传送跟传送多个信号是一样的情况， 因为同时会有多个信号翻转。可能会错误的触发full 或者empty 的信号</p>
+<h4 id="Implementation-坑"><a href="#Implementation-坑" class="headerlink" title="Implementation (坑)"></a>Implementation (坑)</h4><h3 id="Fifo"><a href="#Fifo" class="headerlink" title="Fifo"></a>Fifo</h3><p>FIFO 的设计难度在于 生成 pointer 与 找到一个合适的方法生成full 和 empty 信号。</p>
+<h4 id="Pointer"><a href="#Pointer" class="headerlink" title="Pointer"></a>Pointer</h4><p>跟pc 指针一样，Wpc 永远指向下一个要写入的地址。Rpc 指向要被读的地址。<br>在reset 的时候，Wpc 和 Rpc 都指向0，此时信号是empty。 当wPc 写入时， wpc +1， 此时 Rpc 还是烟来这样， 因此empty 信号清零。 因为Rpc 永远指向被读的那个，所以不需要花2个clk 时间去读，因为已经被读出来了。</p>
+<p>在Wpc 和 Rpc 相等的时候， Fifo 是empty 的。但是full 的信号就不太好区分，，因此此时需要一个额外的bit 来计数。 当这个bit 超过一周时+1. 当MSB 不同时，full， 不然就是empty。</p>
+<h4 id="binary-code-fifo"><a href="#binary-code-fifo" class="headerlink" title="binary code fifo"></a>binary code fifo</h4><p>   可以作为reference， 可以保证行为正确，但是综合出来不太好测试，因为上升沿等误差很小。</p>
+<h4 id="Grey-code"><a href="#Grey-code" class="headerlink" title="Grey code"></a>Grey code</h4><p>   这里有点意思，如果是4为grey code 的话，因为MSB代表圈数，所以用三位来表示。 具体为，从0-7， 然后7-0再一个轮回。</p>
+<h4 id="empty-signal"><a href="#empty-signal" class="headerlink" title="empty signal"></a>empty signal</h4><p>FIFO is empty when read pointer and the synchronized write pointer are equal.<br>writer pointer 要被同步到 read_clk 去来判断。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/myblog/tags/VLSI/" rel="tag"># VLSI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myblog/2020/07/17/ComputerArchitecture-02-Superscalar/" rel="prev" title="ComputerArchitecture-02-Superscalar">
+      <i class="fa fa-chevron-left"></i> ComputerArchitecture-02-Superscalar
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myblog/2020/08/10/ComputerArchitecture-CPU/" rel="next" title="ComputerArchitecture-CPU">
+      ComputerArchitecture-CPU <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDMwOS8yNjc5OQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%9A%E7%A8%B3%E6%80%81-Metastability"><span class="nav-number">1.</span> <span class="nav-text">亚稳态 Metastability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%8C%96%E9%97%AE%E9%A2%98-Synchronizers"><span class="nav-number">2.</span> <span class="nav-text">同步化问题 Synchronizers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Three-flip-flop-synchronizer"><span class="nav-number">2.1.</span> <span class="nav-text">Three flip-flop synchronizer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Synchronizing-signals-from-the-sending-clock-domain"><span class="nav-number">2.2.</span> <span class="nav-text">Synchronizing signals from the sending clock domain</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronizing-fast-signals-into-slow-clock-domains"><span class="nav-number">3.</span> <span class="nav-text">Synchronizing fast signals into slow clock domains</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Requirement-for-reliable-signal-passing-between-clock-domains"><span class="nav-number">3.1.</span> <span class="nav-text">Requirement for reliable signal passing between clock domains</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#passing-a-fast-CDC-pulse"><span class="nav-number">4.</span> <span class="nav-text">passing a fast CDC pulse (!)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Open-loop"><span class="nav-number">4.1.</span> <span class="nav-text">Open loop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#closed-loop"><span class="nav-number">4.2.</span> <span class="nav-text">closed loop</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#passing-multiple-signals-between-clock-signals"><span class="nav-number">5.</span> <span class="nav-text">passing multiple signals between clock signals.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#consolidate-%E5%A4%9A%E4%B8%AACDC-%E4%BF%A1%E5%8F%B7%E5%8F%98%E6%88%90%E4%B8%80%E4%B8%AA%E4%BF%A1%E5%8F%B7%E3%80%82"><span class="nav-number">5.1.</span> <span class="nav-text">consolidate 多个CDC 信号变成一个信号。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#example-1-%EF%BC%88%E4%B8%A4%E4%B8%AA%E7%9B%B8%E5%90%8C%E7%9A%84%E4%BF%A1%E5%8F%B7%EF%BC%89%EF%BC%9A"><span class="nav-number">5.1.1.</span> <span class="nav-text">example 1 （两个相同的信号）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-2-%EF%BC%88%E4%B8%A4%E4%B8%AA%E7%9B%B8%E5%B7%AE1clk-%E7%9A%84%E4%BF%A1%E5%8F%B7%EF%BC%89%EF%BC%9A"><span class="nav-number">5.1.2.</span> <span class="nav-text">example 2 （两个相差1clk 的信号）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#example-3-%E7%BC%96%E7%A0%81%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%BF%A1%E5%8F%B7"><span class="nav-number">5.1.3.</span> <span class="nav-text">example 3 (编码的两个信号)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MCP-formulation"><span class="nav-number">5.2.</span> <span class="nav-text">MCP formulation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MCP-formulation-using-a-synchronized-enable-pulse"><span class="nav-number">5.2.1.</span> <span class="nav-text">MCP formulation using a synchronized enable pulse</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MCP-closed-loop-with-feedback"><span class="nav-number">5.2.2.</span> <span class="nav-text">MCP closed loop with feedback</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Counters-fifo"><span class="nav-number">6.</span> <span class="nav-text">Counters (fifo)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#grey-code"><span class="nav-number">6.1.</span> <span class="nav-text">grey code</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binary-counter"><span class="nav-number">6.2.</span> <span class="nav-text">binary counter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Implementation-%E5%9D%91"><span class="nav-number">6.3.</span> <span class="nav-text">Implementation (坑)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fifo"><span class="nav-number">7.</span> <span class="nav-text">Fifo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pointer"><span class="nav-number">7.1.</span> <span class="nav-text">Pointer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#binary-code-fifo"><span class="nav-number">7.2.</span> <span class="nav-text">binary code fifo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Grey-code"><span class="nav-number">7.3.</span> <span class="nav-text">Grey code</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#empty-signal"><span class="nav-number">7.4.</span> <span class="nav-text">empty signal</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MinghaoOoO"
+      src="/myblog/images/aaa.jpeg">
+  <p class="site-author-name" itemprop="name">MinghaoOoO</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myblog/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myblog/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Minghaooo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Minghaooo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tmhwisc@gmail.com" title="E-Mail → mailto:tmhwisc@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghaooo</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myblog/lib/anime.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myblog/js/utils.js"></script>
+
+<script src="/myblog/js/motion.js"></script>
+
+
+<script src="/myblog/js/schemes/muse.js"></script>
+
+
+<script src="/myblog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/myblog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/myblog/live2dw/assets/assets/koharu.model.json"},"display":{"position":"left"},"mobile":{"show":true,"position":"right"},"react":{"opacity":0.95}});</script></body>
+</html>

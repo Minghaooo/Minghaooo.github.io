@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/myblog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/myblog/css/main.css">
+
+
+<link rel="stylesheet" href="/myblog/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/myblog/lib/pace/pace-theme-minimal.min.css">
+  <script src="/myblog/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"minghaooo.github.io","root":"/myblog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;最近在学从SV到UVM的基础部分，会不定时更新系列知识点的思维导图总结。（麦屯VLSI的课竟然那么少，，，学点验证把）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MindMap from SV to UVM">
+<meta property="og:url" content="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;最近在学从SV到UVM的基础部分，会不定时更新系列知识点的思维导图总结。（麦屯VLSI的课竟然那么少，，，学点验证把）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/week01.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/week02.png">
+<meta property="og:image" content="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/week03.png">
+<meta property="article:published_time" content="2020-05-30T20:25:30.000Z">
+<meta property="article:modified_time" content="2020-08-20T22:32:03.000Z">
+<meta property="article:author" content="MinghaoOoO">
+<meta property="article:tag" content="VLSI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/week01.png">
+
+<link rel="canonical" href="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MindMap from SV to UVM | </title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/myblog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title"></h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/myblog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/myblog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/myblog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/myblog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://minghaooo.github.io/myblog/2020/05/30/Mind-Map-For-UVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/myblog/images/aaa.jpeg">
+      <meta itemprop="name" content="MinghaoOoO">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MindMap from SV to UVM
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-30 13:25:30" itemprop="dateCreated datePublished" datetime="2020-05-30T13:25:30-07:00">2020-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 15:32:03" itemprop="dateModified" datetime="2020-08-20T15:32:03-07:00">2020-08-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;最近在学从SV到UVM的基础部分，会不定时更新系列知识点的思维导图总结。（麦屯VLSI的课竟然那么少，，，学点验证把）</p>
+<span id="more"></span>
+
+<h3 id="万物始于数据结构："><a href="#万物始于数据结构：" class="headerlink" title="万物始于数据结构："></a>万物始于数据结构：</h3><p>&emsp;1. 本章内容就觉得接口有点意思，可以内嵌很多内容，包括定义以及协议检查等。有意思的是硬件存在1，0，x, z四种逻辑，而软件只有两种。</p>
+<p>&emsp;2. 注意下 assign 可以传递x 和z， 而if 不可以。 所以在552课上做小 CPU demo 时老师把 if-else 禁了，，，后来看手把手教你设计CPU Risc-V 的时候看到作者有讲这点才懂。<br>不过不让用always 时序设计（全部用例化标准DFF） 和if  的verilog 有点像数电的连线实验课，其实还挺有意思。<br><img src="week01.png" alt=""></p>
+<h3 id="面向对象的SV"><a href="#面向对象的SV" class="headerlink" title="面向对象的SV:"></a>面向对象的SV:</h3><p>&emsp;1. 类的封装 继承 xxxx就不详细叙述了，我也是小白，，，C；<br>&emsp;2. 数组的组合型和非组合型：<br>&emsp;&emsp;a. 索引在数组名后方时，定义非组合型/非合并型（unpacked）<br>&emsp;&emsp;&emsp;bit [7:0] array1 [3] // 其中 bit[7:0]是向量长度，后面[3]是索引<br>&emsp;&emsp;b. 索引在数组前面时，定义组合型数组（packed）<br>&emsp;&emsp;&emsp;组合型数组存储是连续的，常常被视为向量<br>&emsp;此外还有混合数组等，仔细理解下其索引方式和内存结构就好了。注意，非合并数组好形象是32bit（long int 是64bit） 一个单位，就算你只用了一个byte 也占32bit（Oh no，，，）</p>
+<p><img src="week02.png" alt=""></p>
+<h3 id="随机约束以及虚函数"><a href="#随机约束以及虚函数" class="headerlink" title="随机约束以及虚函数"></a>随机约束以及虚函数</h3><p>&emsp;1. 随机约束是验证中比较重要的一个部分，但是函数和方法本身不难，难点应该在设计验证过程中找出正确的约束条件。<br>&emsp;2. 线程控制也没啥内容，跟linux 多线程编程差不多，而且应该是不可综合的。 具体内容Semphare 什么基本一致，有空整理整理537的内容。<br>&emsp;3. 虚方法的话大家应该都比较熟悉了，，选门OO的课就好了2333<br><img src="week03.png" alt=""></p>
+<p>未完待续。。。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/myblog/tags/VLSI/" rel="tag"># VLSI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myblog/2020/05/29/CS577-Introduction-to-Algorithm/" rel="prev" title="CS577 Introduction to Algorithm">
+      <i class="fa fa-chevron-left"></i> CS577 Introduction to Algorithm
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myblog/2020/05/30/Intro-to-SystemVerilog/" rel="next" title="Intro to SystemVerilog">
+      Intro to SystemVerilog <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MDMwOS8yNjc5OQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%87%E7%89%A9%E5%A7%8B%E4%BA%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">万物始于数据结构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84SV"><span class="nav-number">2.</span> <span class="nav-text">面向对象的SV:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E7%BA%A6%E6%9D%9F%E4%BB%A5%E5%8F%8A%E8%99%9A%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">随机约束以及虚函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MinghaoOoO"
+      src="/myblog/images/aaa.jpeg">
+  <p class="site-author-name" itemprop="name">MinghaoOoO</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/myblog/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/myblog/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Minghaooo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Minghaooo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:tmhwisc@gmail.com" title="E-Mail → mailto:tmhwisc@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minghaooo</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/myblog/lib/anime.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.min.js"></script>
+  <script src="/myblog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/myblog/js/utils.js"></script>
+
+<script src="/myblog/js/motion.js"></script>
+
+
+<script src="/myblog/js/schemes/muse.js"></script>
+
+
+<script src="/myblog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/myblog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/myblog/live2dw/assets/assets/koharu.model.json"},"display":{"position":"left"},"mobile":{"show":true,"position":"right"},"react":{"opacity":0.95}});</script></body>
+</html>
